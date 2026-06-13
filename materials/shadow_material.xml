@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material>
+    <Name>BlitzFX_NG_Shadow</Name>
+    <Shader>shadow_effect.hlsl</Shader>
+    
+    <!-- Constant Buffers -->
+    <ConstantBuffer name="ShadowBuffer" slot="0">
+        <Variable name="matShadowView" type="float4x4"/>
+        <Variable name="matShadowProj" type="float4x4"/>
+        <Variable name="matWorldView" type="float4x4"/>
+        <Variable name="shadowIntensity" type="float" default="0.8"/>
+        <Variable name="shadowSoftness" type="float" default="2.0"/>
+        <Variable name="shadowBias" type="float" default="0.001"/>
+        <Variable name="padding" type="float" default="0.0"/>
+    </ConstantBuffer>
+    
+    <!-- Textures -->
+    <Texture name="shadowMap" slot="0" type="2D" format="D32F"/>
+    <Texture name="colorTexture" slot="1" type="2D" format="BC1"/>
+    
+    <!-- Samplers -->
+    <Sampler name="samplerPoint" slot="0">
+        <Filter>Point</Filter>
+        <AddressU>Clamp</AddressU>
+        <AddressV>Clamp</AddressV>
+        <AddressW>Clamp</AddressW>
+    </Sampler>
+    
+    <Sampler name="shadowSampler" slot="1">
+        <Filter>Comparison</Filter>
+        <AddressU>Clamp</AddressU>
+        <AddressV>Clamp</AddressV>
+        <AddressW>Clamp</AddressW>
+        <ComparisonFunc>LessEqual</ComparisonFunc>
+    </Sampler>
+    
+    <!-- Render State -->
+    <RenderState>
+        <FillMode>Solid</FillMode>
+        <CullMode>Back</CullMode>
+        <BlendState>
+            <Enabled>false</Enabled>
+        </BlendState>
+        <DepthStencilState>
+            <DepthEnable>true</DepthEnable>
+            <DepthWriteMask>All</DepthWriteMask>
+            <DepthFunc>LessEqual</DepthFunc>
+        </DepthStencilState>
+    </RenderState>
+</Material>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material>
+    <Name>BlitzFX_NG_Water</Name>
+    <Shader>water_effect.hlsl</Shader>
+    
+    <!-- Constant Buffers -->
+    <ConstantBuffer name="TransformBuffer" slot="0">
+        <Variable name="matWorldViewProj" type="float4x4"/>
+        <Variable name="matWorld" type="float4x4"/>
+        <Variable name="matView" type="float4x4"/>
+    </ConstantBuffer>
+    
+    <ConstantBuffer name="WaterBuffer" slot="1">
+        <Variable name="waterHeight" type="float" default="0.0"/>
+        <Variable name="waveAmplitude" type="float" default="0.5"/>
+        <Variable name="waveFrequency" type="float" default="0.3"/>
+        <Variable name="waveSpeed" type="float" default="2.0"/>
+        <Variable name="waterColor" type="float4" default="0.2, 0.5, 0.8, 1.0"/>
+        <Variable name="foamColor" type="float4" default="0.9, 0.95, 1.0, 1.0"/>
+        <Variable name="lightDirection" type="float3" default="1.0, 1.0, 1.0"/>
+        <Variable name="waterTransparency" type="float" default="0.7"/>
+    </ConstantBuffer>
+    
+    <!-- Textures -->
+    <Texture name="normalMap" slot="0" type="2D" format="BC5"/>
+    <Texture name="foamTexture" slot="1" type="2D" format="BC1"/>
+    <Texture name="reflectionMap" slot="2" type="2D" format="BC1"/>
+    <Texture name="refractionMap" slot="3" type="2D" format="BC1"/>
+    
+    <!-- Samplers -->
+    <Sampler name="samplerLinear" slot="0">
+        <Filter>Linear</Filter>
+        <AddressU>Wrap</AddressU>
+        <AddressV>Wrap</AddressV>
+        <AddressW>Wrap</AddressW>
+    </Sampler>
+    
+    <!-- Render State -->
+    <RenderState>
+        <FillMode>Solid</FillMode>
+        <CullMode>Back</CullMode>
+        <BlendState>
+            <Enabled>true</Enabled>
+            <SourceBlend>SrcAlpha</SourceBlend>
+            <DestBlend>InvSrcAlpha</DestBlend>
+        </BlendState>
+        <DepthStencilState>
+            <DepthEnable>true</DepthEnable>
+            <DepthWriteMask>All</DepthWriteMask>
+            <DepthFunc>LessEqual</DepthFunc>
+        </DepthStencilState>
+    </RenderState>
+</Material>
